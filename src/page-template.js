@@ -15,13 +15,42 @@ function pageTemplate(data) {
 </head>
 
 <body>
-${data.managerName}
+<div class="container-fluid">
+<div class="row">
+    <div class="col-12 jumbotron mb-3 team-heading">
+        <h1 class="text-center">My Team</h1>
+    </div>
+</div>
+</div>
+${data.managerName},
 
-${data.managerId}
+${data.managerId},
 
-${data.managerEmail}
+${data.managerEmail},
 
-${data.managerOfficeNumber}
+${data.managerOfficeNumber},
+
+<h1>
+${data.engineerName},
+
+${data.engineerId},
+
+${data.engineerEmail},
+
+${data.engineerOfficeNumber}
+
+github.com/${data.engineerGithub}
+</h1>
+
+<h2>
+${data.internName},
+
+${data.internId},
+
+${data.internEmail},
+
+${data.internOfficeNumber},
+</h2>
 
 </body>
 

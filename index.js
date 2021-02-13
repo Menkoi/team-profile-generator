@@ -56,13 +56,145 @@ function createManager() {
                 return "enter your manager office number. ";
             }
         }
-    ])//.then(answers => {
-       // const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
-       // teamMembers.push(manager);
-       // idArray.push(answers.managerId);
-       // createTeam();
-   // });
+    ])
 }
+
+function createTeam() {
+
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "memberChoice",
+            message: "Which type of team member would you like to add?",
+            choices: [
+                "Engineer",
+                "Intern",
+                "I don't want to add any more team members"
+            ]
+        }
+    ]).then(userChoice => {
+        switch (userChoice.memberChoice) {
+            case "Engineer":
+                addEngineer();
+                break;
+            case "Intern":
+                addIntern();
+                break;
+            default:
+                buildTeam();
+        }
+    });
+}
+
+function createEngineer() {
+   return inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is your engineer's name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
+        },
+        {
+            type: 'input',
+            name: 'engineerId',
+            message: 'what is your engineer ID?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your engineer ID. ";
+            }
+        },
+        {
+            type: 'input',
+            name: 'engineerEmail',
+            message: 'what is your engineer email?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your manager email. ";
+            }
+        },
+        {
+            type: 'input',
+            name: 'engineerOfficeNumber',
+            message: 'what is your engineer office number?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your manager office number. ";
+            }
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What is your engineer's GitHub username?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
+        }
+    ])
+}
+
+function createIntern() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is your intern's name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
+        },
+        {
+            type: 'input',
+            name: 'internId',
+            message: 'what is your intern ID?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your intern ID. ";
+            }
+        },
+        {
+            type: 'input',
+            name: 'internEmail',
+            message: 'what is your intern email?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your intern email. ";
+            }
+        },
+        {
+            type: 'input',
+            name: 'internOfficeNumber',
+            message: 'what is your intern office number?',
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "enter your intern office number. ";
+            }
+        },
+    ])
+}
+
 
 createManager()
 .then(data => {
