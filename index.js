@@ -1,15 +1,23 @@
-const Employee = require('./lib/Employee'); // to be created
-const Engineer = require('./lib/Engineer'); //to be created
-const Manager = require('./lib/Manager');
-const Intern = require('./lib/Intern'); // to be created
 
-const { writeFile } = require('./src/generate-html.js');
-const pageTemplate = require('./src/page-template');
+const Engineer = require('./lib/Engineer'); 
+const Manager = require('./lib/Manager');
+const Intern = require('./lib/Intern'); 
+
+const render = require('./src/generate-html');
 const inquirer = require('inquirer');
+const path = require("path");
 const fs = require('fs'); 
 
+const OUTPUT_DIR = path.resolve(__dirname, "dist");
+const outputPath = path.join(OUTPUT_DIR, "index.html");
 
-function createManager() {
+const teamMembers = [];
+const idArray = [];
+
+
+function questions() {
+
+ function createManager() {
     console.log("Build your team");
     return inquirer.prompt([
         {
@@ -56,10 +64,15 @@ function createManager() {
                 return "enter your manager office number. ";
             }
         }
-    ])
+    ]).then(answers => {
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+        teamMembers.push(manager);
+        idArray.push(answers.managerId);
+        createTeam();
+    });
 }
 
-function createTeam() {
+ function createTeam() {
 
     inquirer.prompt([
         {
@@ -75,19 +88,19 @@ function createTeam() {
     ]).then(userChoice => {
         switch (userChoice.memberChoice) {
             case "Engineer":
-                addEngineer();
+                createEngineer();
                 break;
             case "Intern":
-                addIntern();
+                createIntern();
                 break;
             default:
-                buildTeam();
+             team();
         }
     });
 }
 
 function createEngineer() {
-   return inquirer.prompt([
+    inquirer.prompt([
         {
             type: "input",
             name: "engineerName",
@@ -143,7 +156,12 @@ function createEngineer() {
                 return "Please enter at least one character.";
             }
         }
-    ])
+    ]).then(answers => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        idArray.push(answers.engineerId);
+        createTeam();
+    });
 }
 
 function createIntern() {
@@ -182,27 +200,33 @@ function createIntern() {
             }
         },
         {
-            type: 'input',
-            name: 'internOfficeNumber',
-            message: 'what is your intern office number?',
+            type: "input",
+            name: "internSchool",
+            message: "What is your intern's school?",
             validate: answer => {
                 if (answer !== "") {
                     return true;
                 }
-                return "enter your intern office number. ";
+                return "Please enter at least one character.";
             }
-        },
-    ])
+        }
+    ]).then(answers => {
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        teamMembers.push(intern);
+        idArray.push(answers.internId);
+        createTeam();
+    });
+}
+function team() {
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+}
+
+ createManager();
+
 }
 
 
-createManager()
-.then(data => {
-    return pageTemplate(data);
- })
-.then(pageHTML => {
-    return writeFile(pageHTML);
-})
-.catch(err => {
-    console.log(err);
-});
+questions()
+
+
+
