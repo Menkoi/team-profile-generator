@@ -1,3 +1,5 @@
+ <img src="https://i.imgur.com/cwLTOc4.png"/></a>
+ 
  # Team Profile Generator
 
 ![badmath](https://img.shields.io/badge/License-MIT-blue)
