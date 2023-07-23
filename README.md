@@ -39,11 +39,4 @@
   ## Repository
   https://github.com/Menkoi/readme-generator
 
-  ## Questions? Contact me
-
-  - Menkoi
-
-  - https://github.com/Menkoi
-
-  - celaeon@gmail.com
 
